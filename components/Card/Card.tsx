@@ -1,4 +1,7 @@
 import Image from "next/image";
+
+import avatar from "../../public/avatar.webp";
+
 export interface CardProps {
   id: number;
   title: string;
@@ -16,51 +19,57 @@ interface props {
 
 const Card: React.FC<props> = ({ product }) => {
   function numberWithCommas(price: number) {
-    return "$" + price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return "$ " + price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
   function handleClick() {
     window.open(product.url, "blank");
   }
   return (
     <li className="flex justify-between bg-white m-1 p-4 border border-gray-300 shadow rounded-lg text-sm">
-      <div className="flex flex-col justify-between">
+      <div className="flex flex-col justify-between pr-2">
         <div>
           <div className="font-bold text-base">{product.title}</div>
           <div className="text-gray-400">
             <s>ML: {numberWithCommas(product.mprice)}</s>
           </div>
-          <div className="font-bold text-blue-700">
+          <div className="font-bold text-blue-700 mb-2">
             {numberWithCommas(product.price)}
           </div>
+          <a
+            className="flex items-center leading-8"
+            href={`https://www.instagram.com/${product.author}`}
+            target="_blank"
+          >
+            <div className="w-5 h-5 relative shadow mr-2">
+              <Image
+                src={avatar}
+                layout="fill"
+                objectFit="cover"
+                className="rounded-full"
+              />
+            </div>
+            <div className="text-xs">@{product.author}</div>
+          </a>
         </div>
-        <a
-          className="flex items-center leading-8"
-          href={`https://www.instagram.com/${product.author}`}
-          target="_blank"
+        <button
+          onClick={handleClick}
+          className="bg-blue-500 hover:bg-blue-700 text-white text-xs font-bold w-28 
+          py-2 px-4 rounded mt-2"
         >
-          <div className="w-5 h-5 relative shadow mr-2">
-            <Image
-              src={product.avatar}
-              layout="fill"
-              objectFit="cover"
-              className="rounded-full"
-            />
-          </div>
-          <div>@{product.author}</div>
-        </a>
+          Contactar
+        </button>
       </div>
       <div className="flex flex-col justifys-between">
-        <div className="w-40 h-32 relative shadow">
-          <Image
+        <div className="w-40 h-40 shadow">
+          <img
+            className="w-full h-full rounded-sm object-cover"
             src={product.image}
-            layout="fill"
-            objectFit="cover"
-            className="rounded-sm"
+            alt="imagen del producto"
           />
         </div>
         <button
           onClick={handleClick}
-          className="bg-blue-500 hover:bg-blue-700 text-white text-xs font-bold py-2 px-4 rounded mt-2"
+          className="bg-yellow-500 hover:bg-yellow-700 text-white text-xs font-bold py-2 px-4 rounded mt-2"
         >
           Ver en MercadoLibre
         </button>
