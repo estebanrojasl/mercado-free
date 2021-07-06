@@ -33,9 +33,9 @@ const Navbar: React.FC = () => {
         <div className="flex items-center border-solid border border-gray-200 rounded-full mx-4 mb-4">
           <Magnifier className="text-gray-400 ml-1" />
           <input
-            className="text-sm leading-6"
+            className="text-sm leading-6 ml-2 outline-none w-full mr-4"
             type="text"
-            placeholder="  Buscar un producto"
+            placeholder="Buscar un producto"
           />
         </div>
         <h1 className="text-center mb-6">
