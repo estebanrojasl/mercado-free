@@ -13,14 +13,14 @@ const Menu: React.FC<Props> = ({ className, navClick }) => {
       <div className="flex items-start justify-between m-6">
         <ul>
           <li className="mb-2">
-            <Link href="/">
+            <Link href="/" passHref>
               <button className="font-bold" onClick={navClick}>
                 Comprar
               </button>
             </Link>
           </li>
           <li>
-            <Link href="/vender">
+            <Link href="/vender" passHref>
               <button className="font-bold" onClick={navClick}>
                 Vender
               </button>

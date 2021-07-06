@@ -24,7 +24,7 @@ const Navbar: React.FC = () => {
           <button onClick={handleMenuClick} className="w-4 h-4 relative">
             <Image src={menu} alt="Manu" layout="fill" objectFit="contain" />
           </button>
-          <Link href="/">
+          <Link href="/" passHref>
             <button className="h-10 w-10 relative">
               <Image src={logo} alt="Logo" layout="fill" objectFit="contain" />
             </button>

@@ -22,10 +22,14 @@ const Card: React.FC<props> = ({ product }) => {
     return "$ " + price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
   function handleMlClick() {
-    window.open(product.url, "blank");
+    window.open(product.url, "blank", "rel=noreferrer");
   }
   function handleInstaClick() {
-    window.open(`https://www.instagram.com/${product.author}`, "blank");
+    window.open(
+      `https://www.instagram.com/${product.author}`,
+      "blank",
+      "rel=noreferrer"
+    );
   }
   return (
     <li className="flex justify-between bg-white m-1 p-4 border border-gray-300 shadow rounded-lg text-sm">
@@ -38,21 +42,17 @@ const Card: React.FC<props> = ({ product }) => {
           <div className="font-bold text-blue-700 mb-2">
             {numberWithCommas(product.price)}
           </div>
-          <a
-            className="flex items-center leading-8"
-            href={`https://www.instagram.com/${product.author}`}
-            target="_blank"
-          >
-            <div className="w-5 h-5 relative shadow mr-2">
+          <div className="flex items-center leading-8">
+            <div className="w-5 h-5 relative shadow mr-2 rounded-full">
               <Image
                 src={avatar}
                 layout="fill"
                 objectFit="cover"
-                className="rounded-full"
+                alt="avatar"
               />
             </div>
             <div className="text-xs">@{product.author}</div>
-          </a>
+          </div>
         </div>
         <button
           onClick={handleInstaClick}
@@ -63,10 +63,12 @@ const Card: React.FC<props> = ({ product }) => {
         </button>
       </div>
       <div className="flex flex-col justify-between">
-        <div className="w-40 h-40 shadow">
-          <img
-            className="w-full h-full rounded-sm object-cover"
+        <div className="rounded-sm object-cover w-40 h-40 shadow">
+          <Image
             src={product.image}
+            height={160}
+            width={160}
+            objectFit="scale-down"
             alt="imagen del producto"
           />
         </div>
