@@ -28,7 +28,7 @@ export default async function handler(
       );
       infoObject.image = image.src;
       infoObject.price = document
-        .querySelector(".price-tag-fraction")!
+        .querySelector(".ui-pdp-price__second-line .price-tag-fraction")!
         .innerHTML.replace(".", "");
 
       return infoObject;

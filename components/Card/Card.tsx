@@ -21,8 +21,11 @@ const Card: React.FC<props> = ({ product }) => {
   function numberWithCommas(price: number) {
     return "$ " + price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
-  function handleClick() {
+  function handleMlClick() {
     window.open(product.url, "blank");
+  }
+  function handleInstaClick() {
+    window.open(`https://www.instagram.com/${product.author}`, "blank");
   }
   return (
     <li className="flex justify-between bg-white m-1 p-4 border border-gray-300 shadow rounded-lg text-sm">
@@ -52,14 +55,14 @@ const Card: React.FC<props> = ({ product }) => {
           </a>
         </div>
         <button
-          onClick={handleClick}
+          onClick={handleInstaClick}
           className="bg-blue-500 hover:bg-blue-700 text-white text-xs font-bold w-28 
           py-2 px-4 rounded mt-2"
         >
           Contactar
         </button>
       </div>
-      <div className="flex flex-col justifys-between">
+      <div className="flex flex-col justify-between">
         <div className="w-40 h-40 shadow">
           <img
             className="w-full h-full rounded-sm object-cover"
@@ -68,7 +71,7 @@ const Card: React.FC<props> = ({ product }) => {
           />
         </div>
         <button
-          onClick={handleClick}
+          onClick={handleMlClick}
           className="bg-yellow-500 hover:bg-yellow-700 text-white text-xs font-bold py-2 px-4 rounded mt-2"
         >
           Ver en MercadoLibre

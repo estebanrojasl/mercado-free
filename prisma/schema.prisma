@@ -13,8 +13,8 @@ generator client {
 model Product {
   id        Int     @default(autoincrement()) @id
   title     String
-  url       String 
-  price    Int
+  url       String  @unique
+  price     Int
   mprice    Int
   image     String
   author    String

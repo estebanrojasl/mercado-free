@@ -1,5 +1,5 @@
+import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { GetStaticProps } from "next";
 
 const Sell: React.FC = () => {
   type Inputs = {
@@ -8,9 +8,12 @@ const Sell: React.FC = () => {
     user: string;
   };
 
-  const { register, handleSubmit } = useForm<Inputs>();
+  const { register, handleSubmit, reset } = useForm<Inputs>();
+
+  const [published, setPublished] = useState("false");
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    setPublished("loading");
     try {
       await fetch("/api/post", {
         method: "POST",
@@ -20,6 +23,8 @@ const Sell: React.FC = () => {
     } catch (error) {
       console.error(error);
     }
+    setPublished("true");
+    reset();
   };
 
   return (
@@ -40,7 +45,9 @@ const Sell: React.FC = () => {
             id="url"
             type="text"
             placeholder="Pega aqui tu link de MercadoLibre"
-            {...register("url")}
+            {...register("url", {
+              required: true,
+            })}
           />
         </div>
         <div className="mb-4">
@@ -55,7 +62,9 @@ const Sell: React.FC = () => {
             id="price"
             type="text"
             placeholder="Precio fuera de MercadoLibre"
-            {...register("price")}
+            {...register("price", {
+              required: true,
+            })}
           />
         </div>
         <div className="mb-6">
@@ -70,15 +79,33 @@ const Sell: React.FC = () => {
             id="user"
             type="text"
             placeholder="Usuario de Instagram ej: therock"
-            {...register("user")}
+            {...register("user", {
+              required: true,
+            })}
           />
         </div>
-        <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline float-right"
-          type="submit"
-        >
-          Publicar
-        </button>
+        <div className="flex items-center justify-between">
+          <button
+            className={`bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline`}
+            type="submit"
+          >
+            Publicar
+          </button>
+          <p
+            className={`font-bold text-blue-600 animate-pulse ${
+              published === "loading" ? "" : "hidden"
+            }`}
+          >
+            Cargando...
+          </p>
+          <p
+            className={`font-bold text-blue-600 text-xl animate-bounce ${
+              published === "true" ? "" : "hidden"
+            }`}
+          >
+            Publicado!
+          </p>
+        </div>
       </form>
       <p className="text-center text-gray-500 text-xs">
         ©2021 Mercado-free. All rights reserved.
