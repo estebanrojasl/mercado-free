@@ -8,23 +8,67 @@ const Sell: React.FC = () => {
     user: string;
   };
 
+  type MercadoData = {
+    title: string;
+    image: string;
+    mprice: number;
+  };
+
+  type Product = {
+    title: string;
+    price: number;
+    image: string;
+    mprice: number;
+    url: string;
+    author: string;
+    avatar: string;
+  };
+
   const { register, handleSubmit, reset } = useForm<Inputs>();
 
   const [published, setPublished] = useState("false");
 
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    setPublished("loading");
+  const fetchMercado = async (object: Inputs) =>{
+    try {
+      const response = await fetch("/api/scrape", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(object),
+      });
+      const mercadoData = await response.json();
+      return mercadoData
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  const postProduct = async (product: Product) =>{
     try {
       await fetch("/api/post", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify(product),
       });
     } catch (error) {
       console.error(error);
     }
+  }
+
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    setPublished("loading");
+    const mercadoData = await fetchMercado(data)
+    const productData = {
+      title: mercadoData.title,
+      image: mercadoData.image,
+      mprice: Number(mercadoData.price),
+      price: Number(data.price),
+      url: data.url,
+      author: data.user,
+      avatar: "",
+    };
+    postProduct(productData);
     setPublished("true");
-    reset();
+     reset();
   };
 
   return (

@@ -1,21 +1,15 @@
 // POST /api/post
 import type { NextApiRequest, NextApiResponse } from "next";
-<<<<<<< Updated upstream
 import puppeteer from "puppeteer";
-import chromium from "chrome-aws-lambda"
-=======
->>>>>>> Stashed changes
-
-import prisma from "../../lib/prisma";
+import chromium from "chrome-aws-lambda";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { title, price, image, mprice, url, author } = req.body;
+  const { url } = req.body;
 
   try {
-<<<<<<< Updated upstream
     const browser = await puppeteer.launch({
       args: [...chromium.args, "--hide-scrollbars", "--disable-web-security"],
       defaultViewport: chromium.defaultViewport,
@@ -23,6 +17,7 @@ export default async function handler(
       headless: true,
       ignoreHTTPSErrors: true,
     });
+    // const browser = await puppeteer.launch();
     const page = await browser.newPage();
     await page.goto(url);
 
@@ -47,23 +42,9 @@ export default async function handler(
 
     await browser.close();
 
-=======
->>>>>>> Stashed changes
-    const result = await prisma.product.create({
-      data: {
-        title: title,
-        url: url,
-        price: price,
-        mprice: mprice,
-        image: image,
-        author: author,
-        avatar: "",
-      },
-    });
-
-    res.status(200).json(result);
+    res.status(200).json(mercadoInfo);
   } catch (error) {
     console.log(error);
-    res.status(500).json("post error");
+    res.status(500).json("scrape error");
   }
 }
