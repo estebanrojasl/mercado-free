@@ -6,7 +6,7 @@ import prisma from "../lib/prisma";
 
 export const getStaticProps: GetStaticProps = async () => {
   const data = await prisma.product.findMany({});
-  return { props: { data } };
+  return { props: { data }, revalidate: 30 };
 };
 
 type Props = {
