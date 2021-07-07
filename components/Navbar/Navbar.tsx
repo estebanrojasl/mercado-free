@@ -1,7 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
 
 import Menu from "../Menu/Menu";
 import Magnifier from "../Magnifier/Magnifier";
@@ -9,11 +11,31 @@ import Magnifier from "../Magnifier/Magnifier";
 import menu from "../../public/menu.png";
 import logo from "../../public/logo.jpeg";
 
-const Navbar: React.FC = () => {
-  const [navbarOpen, setNavbarOpen] = useState(false);
+type Input = {
+  search: string;
+};
 
+interface NavbarProps {
+  onSearch: Function;
+}
+
+const Navbar: React.FC<NavbarProps> = ({ onSearch }) => {
+  const { register, handleSubmit, setFocus } = useForm<Input>();;
+
+  const [navbarOpen, setNavbarOpen] = useState(false);
   function handleMenuClick() {
     setNavbarOpen((prev) => !prev);
+  }
+
+  const searchSubmit: SubmitHandler<Input> = async ({ search }) => {
+    onSearch(search);
+  };
+  
+  const router = useRouter();
+  const path = router.asPath;
+  let pathVender = false;
+  if (path === "/vender") {
+    pathVender = true;
   }
 
   return (
@@ -30,13 +52,30 @@ const Navbar: React.FC = () => {
             </button>
           </Link>
         </nav>
-        <div className="flex items-center border-solid border border-gray-200 rounded-full mx-4 mb-4">
+        <div
+          className={`${
+            pathVender ? "hidden" : ""
+          } flex items-center border-solid border border-gray-200 rounded-full mx-4 mb-4`}
+        >
           <Magnifier className="text-gray-400 ml-1" />
-          <input
-            className="text-sm leading-6 ml-2 outline-none w-full mr-4"
-            type="text"
-            placeholder="Buscar un producto"
-          />
+          <form
+            className="flex justify-between w-full mr-2"
+            onSubmit={handleSubmit(searchSubmit)}
+          >
+            <input
+              className="text-sm leading-6 ml-2 outline-none mr-4 w-full"
+              id="search"
+              type="text"
+              placeholder="Buscar un producto"
+              {...register("search")}
+            />
+            <button
+              className="text-sm"
+              type="submit"
+            >
+              Buscar
+            </button>
+          </form>
         </div>
         <h1 className="text-center mb-6">
           El verdadero mercado libre, sin comsiones
