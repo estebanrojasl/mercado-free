@@ -151,7 +151,7 @@ const Sell: React.FC = () => {
                 published === "true" ? "" : "hidden"
               }`}
             >
-              Publicado!
+              🚀 Publicado!
             </p>
           </div>
         </form>

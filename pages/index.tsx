@@ -27,7 +27,7 @@ const Home: React.FC<Props> = (props) => {
   useEffect(() => {
     const products = props.data.filter(
       (product) =>
-        product.title.toLowerCase().includes(term) ||
+        product.title.toLowerCase().includes(term.toLowerCase()) ||
         product.url === (term)
     );
     setProducts(products)

@@ -35,7 +35,7 @@ export default async function handler(
       infoObject.image = image.src;
       infoObject.price = document
         .querySelector(".ui-pdp-price__second-line .price-tag-fraction")!
-        .innerHTML.replace(".", "");
+        .innerHTML.replaceAll(".", "");
 
       return infoObject;
     });
