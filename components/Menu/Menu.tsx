@@ -8,7 +8,7 @@ type Props = {
 const Menu: React.FC<Props> = ({ className, navClick }) => {
   return (
     <div
-      className={`${className} absolute top-0 bg-white h-full w-4/5 z-50 max-w-lg`}
+      className={`${className} fixed bg-white h-full w-4/5 z-50 max-w-lg`}
     >
       <div className="flex items-start justify-between m-6">
         <ul>
