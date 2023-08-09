@@ -23,21 +23,19 @@ export default async function handler(
 
     await page.waitForSelector("[class=ui-pdp-title]");
     const mercadoInfo = await page.evaluate(() => {
-      const infoObject = {
-        title: "",
-        price: "",
-        image: "",
-      };
-      infoObject.title = document.querySelector("h1")!.innerHTML;
-      const image = <HTMLImageElement>(
-        document.querySelector(".ui-pdp-gallery__figure__image")!
-      );
-      infoObject.image = image.src;
-      infoObject.price = document
-        .querySelector(".ui-pdp-price__second-line .price-tag-fraction")!
-        .innerHTML.replaceAll(".", "");
+      const title = document.querySelector("h1")?.innerHTML;
+      const image = (
+        document.querySelector(
+          ".ui-pdp-gallery__figure__image"
+        ) as HTMLImageElement
+      ).src;
+      const price = document
+        .querySelector(
+          ".ui-pdp-price__second-line .andes-money-amount__fraction"
+        )
+        ?.innerHTML.replaceAll(".", "");
 
-      return infoObject;
+      return { title, image, price };
     });
 
     await browser.close();
