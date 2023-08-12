@@ -1,7 +1,6 @@
 // POST /api/post
 import type { NextApiRequest, NextApiResponse } from "next";
 import puppeteerCore, { Browser } from "puppeteer-core";
-import chromium from "chrome-aws-lambda";
 
 interface MercadoInfo {
   title: string | null;
@@ -17,9 +16,9 @@ export default async function handler(
 
   try {
     const browser: Browser = await puppeteerCore.launch({
-      args: [...chromium.args, "--hide-scrollbars", "--disable-web-security"],
-      defaultViewport: chromium.defaultViewport,
-      executablePath: await chromium.executablePath,
+      // args: [...chromium.args, "--hide-scrollbars", "--disable-web-security"],
+      // defaultViewport: chromium.defaultViewport,
+      // executablePath: await chromium.executablePath,
       headless: true,
       ignoreHTTPSErrors: true,
     });
