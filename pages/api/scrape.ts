@@ -3,10 +3,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import puppeteer from "puppeteer-core";
 import chromium from "chrome-aws-lambda";
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+module.exports = async (req: NextApiRequest, res: NextApiResponse) => {
   const { url } = req.body;
 
   try {
@@ -45,4 +42,4 @@ export default async function handler(
     console.log(error);
     res.status(500).json("scrape error");
   }
-}
+};
