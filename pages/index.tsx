@@ -28,14 +28,14 @@ const Home: React.FC<Props> = (props) => {
     const products = props.data.filter(
       (product) =>
         product.title.toLowerCase().includes(term.toLowerCase()) ||
-        product.url === (term)
+        product.url === term
     );
-    setProducts(products)
-  }, [term]);
+    setProducts(products);
+  }, [props.data, term]);
   return (
     <>
       <Layout onData={handleData} />
-      <Products products={products} searchTerm={term}/>
+      <Products products={products} searchTerm={term} />
     </>
   );
 };

@@ -46,8 +46,7 @@ const Card: React.FC<props> = ({ product }) => {
             <div className="w-5 h-5 relative shadow mr-2 rounded-full">
               <Image
                 src={avatar}
-                layout="fill"
-                objectFit="cover"
+                style={{ objectFit: "cover", width: "100%", height: "auto" }}
                 alt="avatar"
               />
             </div>
@@ -68,7 +67,11 @@ const Card: React.FC<props> = ({ product }) => {
             src={product.image}
             height={160}
             width={160}
-            objectFit="scale-down"
+            style={{
+              objectFit: "contain",
+              maxWidth: "100%",
+              maxHeight: "100%",
+            }}
             alt="imagen del producto"
           />
         </div>

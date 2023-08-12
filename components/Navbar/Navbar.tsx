@@ -20,7 +20,7 @@ interface NavbarProps {
 }
 
 const Navbar: React.FC<NavbarProps> = ({ onSearch }) => {
-  const { register, handleSubmit, setFocus } = useForm<Input>();;
+  const { register, handleSubmit, setFocus } = useForm<Input>();
 
   const [navbarOpen, setNavbarOpen] = useState(false);
   function handleMenuClick() {
@@ -30,7 +30,7 @@ const Navbar: React.FC<NavbarProps> = ({ onSearch }) => {
   const searchSubmit: SubmitHandler<Input> = async ({ search }) => {
     onSearch(search);
   };
-  
+
   const router = useRouter();
   const path = router.asPath;
   let pathVender = false;
@@ -44,11 +44,19 @@ const Navbar: React.FC<NavbarProps> = ({ onSearch }) => {
       <div className="flex flex-col bg-white sticky top-0 shadow z-10">
         <nav className="flex justify-between items-center my-4 mx-6">
           <button onClick={handleMenuClick} className="w-4 h-4 relative">
-            <Image src={menu} alt="Manu" layout="fill" objectFit="contain" />
+            <Image
+              src={menu}
+              alt="Menu"
+              style={{ objectFit: "contain", width: "100%", height: "auto" }}
+            />
           </button>
           <Link href="/" passHref>
             <button className="h-10 w-10 relative">
-              <Image src={logo} alt="Logo" layout="fill" objectFit="contain" />
+              <Image
+                src={logo}
+                alt="Logo"
+                style={{ objectFit: "contain", width: "100%", height: "auto" }}
+              />
             </button>
           </Link>
         </nav>
@@ -69,10 +77,7 @@ const Navbar: React.FC<NavbarProps> = ({ onSearch }) => {
               placeholder="Buscar un producto"
               {...register("search")}
             />
-            <button
-              className="text-sm"
-              type="submit"
-            >
+            <button className="text-sm" type="submit">
               Buscar
             </button>
           </form>

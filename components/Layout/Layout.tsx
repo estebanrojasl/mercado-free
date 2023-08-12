@@ -5,9 +5,9 @@ import { useState } from "react";
 
 interface LayoutProps {
   onData?: Function;
-};
+}
 
-const Layout: React.FC<LayoutProps> = ({onData}) => {
+const Layout: React.FC<LayoutProps> = ({ onData }) => {
   const [searchTerm, setSearchTerm] = useState("");
 
   function handleSearch(term: string) {
@@ -16,9 +16,9 @@ const Layout: React.FC<LayoutProps> = ({onData}) => {
 
   useEffect(() => {
     if (onData) {
-      onData(searchTerm)
+      onData(searchTerm);
     }
-  }, [searchTerm]);
+  }, [onData, searchTerm]);
 
   return (
     <div className="text-base">
