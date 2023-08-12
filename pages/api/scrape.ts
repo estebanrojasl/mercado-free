@@ -1,7 +1,7 @@
 // POST /api/post
 import type { NextApiRequest, NextApiResponse } from "next";
-import puppeteer from "puppeteer-core";
-import chromium from "chrome-aws-lambda";
+import puppeteer from "puppeteer";
+import chromium from "@sparticuz/chromium";
 
 interface MercadoInfo {
   title: string | null;
