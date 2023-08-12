@@ -8,7 +8,6 @@ module.exports = {
       "**caniuse-lite**",
       "**styled-jsx**",
       "**react-dom**",
-      "**next**",
     ],
   },
 };
