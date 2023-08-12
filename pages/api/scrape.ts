@@ -3,7 +3,16 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import puppeteer from "puppeteer-core";
 import chromium from "chrome-aws-lambda";
 
-module.exports = async (req: NextApiRequest, res: NextApiResponse) => {
+interface MercadoInfo {
+  title: string | null;
+  image: string;
+  price: string | null;
+}
+
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse<MercadoInfo | string>
+) {
   const { url } = req.body;
 
   try {
@@ -14,23 +23,23 @@ module.exports = async (req: NextApiRequest, res: NextApiResponse) => {
       headless: true,
       ignoreHTTPSErrors: true,
     });
-    // const browser = await puppeteer.launch();
     const page = await browser.newPage();
     await page.goto(url);
 
     await page.waitForSelector("[class=ui-pdp-title]");
-    const mercadoInfo = await page.evaluate(() => {
-      const title = document.querySelector("h1")?.innerHTML;
+    const mercadoInfo: MercadoInfo = await page.evaluate(() => {
+      const title = document.querySelector("h1")?.textContent ?? null;
       const image = (
         document.querySelector(
           ".ui-pdp-gallery__figure__image"
         ) as HTMLImageElement
       ).src;
-      const price = document
-        .querySelector(
-          ".ui-pdp-price__second-line .andes-money-amount__fraction"
-        )
-        ?.innerHTML.replaceAll(".", "");
+      const price =
+        document
+          .querySelector(
+            ".ui-pdp-price__second-line .andes-money-amount__fraction"
+          )
+          ?.innerHTML.replaceAll(".", "") ?? null;
 
       return { title, image, price };
     });
@@ -38,8 +47,8 @@ module.exports = async (req: NextApiRequest, res: NextApiResponse) => {
     await browser.close();
 
     res.status(200).json(mercadoInfo);
-  } catch (error) {
+  } catch (error: any) {
     console.log(error);
     res.status(500).json("scrape error");
   }
-};
+}
