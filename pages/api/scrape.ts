@@ -1,6 +1,6 @@
 // POST /api/post
 import type { NextApiRequest, NextApiResponse } from "next";
-import puppeteer from "puppeteer";
+import puppeteer from "puppeteer-core";
 // import chromium from "chrome-aws-lambda";
 
 export default async function handler(
@@ -17,10 +17,7 @@ export default async function handler(
     //   headless: true,
     //   ignoreHTTPSErrors: true,
     // });
-    const browser = await puppeteer.launch({
-      args: ["--no-sandbox"],
-      headless: true,
-    });
+    const browser = await puppeteer.launch();
     const page = await browser.newPage();
     await page.goto(url);
 
