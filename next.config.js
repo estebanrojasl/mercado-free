@@ -4,7 +4,7 @@ module.exports = {
     domains: ["http2.mlstatic.com"],
   },
   experimental: {
-    outputFileTracingExcludes: [
+    outputFileTracingIgnores: [
       "**caniuse-lite**",
       "**styled-jsx**",
       "**react-dom**",
