@@ -1,7 +1,7 @@
 // POST /api/post
 import type { NextApiRequest, NextApiResponse } from "next";
 import puppeteer from "puppeteer";
-// import chromium from "chrome-aws-lambda";
+import chromium from "chrome-aws-lambda";
 
 export default async function handler(
   req: NextApiRequest,
@@ -10,14 +10,14 @@ export default async function handler(
   const { url } = req.body;
 
   try {
-    // const browser = await puppeteer.launch({
-    //   args: [...chromium.args, "--hide-scrollbars", "--disable-web-security"],
-    //   defaultViewport: chromium.defaultViewport,
-    //   executablePath: await chromium.executablePath,
-    //   headless: true,
-    //   ignoreHTTPSErrors: true,
-    // });
-    const browser = await puppeteer.launch({ args: ["--no-sandbox"] });
+    const browser = await puppeteer.launch({
+      args: [...chromium.args, "--hide-scrollbars", "--disable-web-security"],
+      defaultViewport: chromium.defaultViewport,
+      executablePath: await chromium.executablePath,
+      headless: true,
+      ignoreHTTPSErrors: true,
+    });
+    // const browser = await puppeteer.launch({ args: ["--no-sandbox"] });
     const page = await browser.newPage();
     await page.goto(url);
 
@@ -39,6 +39,14 @@ export default async function handler(
     });
 
     await browser.close();
+
+    if (
+      mercadoInfo.image == null ||
+      mercadoInfo.price == null ||
+      mercadoInfo.title == null
+    ) {
+      throw new Error("scrape error");
+    }
 
     res.status(200).json(mercadoInfo);
   } catch (error) {
